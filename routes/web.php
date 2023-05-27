@@ -18,6 +18,14 @@ Route::get('/', function () {
 });
 
 Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function(){
-    Route::get('dashboard', 'AdminController@dashboard');
+
     Route::match(['get', 'post'], '/login', 'AdminController@login');
+
+
+    Route::middleware(['admin'])->group(function () {
+        Route::get('dashboard', 'AdminController@dashboard');
+        Route::get('update-password', 'AdminController@updatePassword');
+        Route::get('logout', 'AdminController@logout');
+    });
+
 });
